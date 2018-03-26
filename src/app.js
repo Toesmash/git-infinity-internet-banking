@@ -30,6 +30,7 @@ const renderApp = () => {
 
 ReactDOM.render(<LoadingPage />, document.getElementById('app'));
 
+firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     reduxStore.dispatch(login(user.uid));
