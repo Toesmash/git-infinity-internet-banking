@@ -1,0 +1,35 @@
+
+  .box-layout {
+    background: url('/images/bg.png');
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .box-layout__box {
+    border-radius: 3px;
+    background: white;
+    width: 40rem;
+    padding: $l-size $m-size;
+  }
+
+  .box-layout__inputs {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .box-layout__title {
+    color: black;
+    margin: 0 0 $m-size 0;
+    line-height: 1;
+    text-align: center;
+    h2 {
+      color: $txt-color;
+    }
+    span {
+      font-weight: 400;
+    }
+  }

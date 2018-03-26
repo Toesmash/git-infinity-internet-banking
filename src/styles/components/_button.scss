@@ -1,0 +1,71 @@
+.button {
+  color: white;
+  background: $main-color;
+  padding: $s-size;
+  font-size: 2rem;
+  font-weight: 300;
+  border: none;
+  line-height: 1;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.button--link {
+  background: none;
+}
+
+.button--secondary {
+  background: #888;
+}
+
+.button--login {
+  border: 2px transparent $main-color;
+  background: none;
+  position: absolute;
+  top: $s-size;
+  left: $s-size;
+  transition: color 0.3s ease-in-out;
+  &:hover {
+    border-bottom: 2px solid $main-color;
+  }
+}
+
+.button__submit {
+  flex-grow: 2;
+  border-bottom: 3px solid darken($main-color, 10);
+  border-radius: 3px;
+  margin-left: $s-size;
+  &:active {
+    border-bottom: none;
+  }
+  &:focus {
+    background-image: none;
+    outline: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+}
+
+.button__submit:disabled {
+  color: lightgray;
+  background: desaturate($main-color, 40%);
+  border-bottom: 3px solid darken(desaturate($main-color, 40%), 10);
+}
+
+.button__reset {
+  font-size: 1.3rem;
+  font-weight: 300;
+  border-radius: 3px;
+  border-bottom: 2px solid darken(lightgrey, 10);
+  background: lightgrey;
+  color: lighten(lightgrey, 20);
+  &:active {
+    border-bottom: none;
+  }
+  &:focus {
+    background-image: none;
+    outline: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+}

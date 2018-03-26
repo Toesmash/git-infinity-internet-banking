@@ -1,0 +1,15 @@
+
+// import authenticator from 'authenticator';
+  // AUTHENTIFICATOR METHOD
+  // generateQr = () => {
+  //   const key = (this.state.secret).replace(/ /g, '').toUpperCase();
+  //   const accountName = `${this.state.lastName}@infinity.sk`;
+  //   const issuer = 'InfinityBank';
+  //   const algorithm = 'SHA1';
+  //   const digits = 6;
+  //   const period = 30;
+
+  //   const uri = `otpauth://totp/${issuer}%3A${accountName}%3Fsecret%3D${key}%26issuer%3D${issuer}&algorithm=${algorithm}&digits=${digits}&period=${period}`;
+  //   const url = `https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl=${uri}`;
+  //   return <img alt="QRcode" src={url} />
+  // }

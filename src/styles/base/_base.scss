@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:400,500,700');
+* {
+    box-sizing: border-box;
+    letter-spacing: 1.2;
+}
+
+html {
+    font-size: 62.5%;
+    overflow-y: scroll;
+}
+
+body {
+    color: $txt-color;
+    font-family: 'Raleway', Helvetica, sans-serif;
+    font-size: $m-size;
+    line-height: 1.6;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:disabled {
+    cursor: default;
+}
+
+.is-active {
+    font-weight: bold;
+}
