@@ -4,7 +4,7 @@ import Yup from 'yup';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import authenticator from 'authenticator';
-import database, { firebase } from '../firebase/firebase';
+import database from '../firebase/firebase';
 
 import { startLogin } from '../actions/authActions';
 
