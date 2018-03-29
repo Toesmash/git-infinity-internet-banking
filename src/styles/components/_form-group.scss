@@ -25,6 +25,12 @@
   }
 }
 
+.text-input__select {
+  @extend .text-input;
+  height: 3rem;
+  padding: $xs-size $m-size;
+}
+
 .text-input--error {
   border-color: $error-color;
 }
@@ -63,4 +69,23 @@
 
 .form-button-reset {
   float: right;
+}
+
+:-ms-input-placeholder,
+::-ms-input-placeholder {
+  font-family: 'Raleway', Helvetica, sans-serif;
+}
+
+::placeholder {
+  font-family: 'Raleway', Helvetica, sans-serif;
+  opacity: 1;
+  /* Firefox */
+}
+
+.text-input__balance {
+  margin-top: $s-size;
+  text-align: center;
+  span {
+    font-weight: bold;
+  }
 }

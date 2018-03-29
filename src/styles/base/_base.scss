@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Raleway:400,500,700');
+@import url('https://fonts.googleapis.com/css?family=Raleway:300,400,500,700');
 * {
     box-sizing: border-box;
     letter-spacing: 1.2;
@@ -10,6 +10,7 @@ html {
 }
 
 body {
+    background: $bg-color;
     color: $txt-color;
     font-family: 'Raleway', Helvetica, sans-serif;
     font-size: $m-size;

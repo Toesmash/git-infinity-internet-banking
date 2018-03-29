@@ -10,14 +10,6 @@
   text-decoration: none;
 }
 
-.button--link {
-  background: none;
-}
-
-.button--secondary {
-  background: #888;
-}
-
 .button--login {
   border: 2px transparent $main-color;
   background: none;
@@ -30,6 +22,21 @@
   }
 }
 
+.button--logout {
+  color: $error-color;
+  font-size: 1.8rem;
+  padding: $xs-size;
+  margin-left: $m-size;
+  border-radius: 5px;
+  background: none;
+  border: 2px solid $error-color;
+  transition: border 0.2s ease-in-out, color 0.2s ease-in-out;
+  &:hover {
+    color: lighten($error-color, 5);
+    border: 2px solid lighten($error-color, 5);
+  }
+}
+
 .button__submit {
   flex-grow: 2;
   border-bottom: 3px solid darken($main-color, 10);
@@ -37,6 +44,7 @@
   margin-left: $s-size;
   &:active {
     border-bottom: none;
+    margin-top: 3px;
   }
   &:focus {
     background-image: none;
@@ -61,6 +69,7 @@
   color: lighten(lightgrey, 20);
   &:active {
     border-bottom: none;
+    margin-top: 2px;
   }
   &:focus {
     background-image: none;
@@ -68,4 +77,9 @@
     -webkit-box-shadow: none;
     box-shadow: none;
   }
+}
+
+.button__fastpayment {
+  float: left;
+  margin-left: 0;
 }

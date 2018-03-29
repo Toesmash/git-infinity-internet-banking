@@ -1,0 +1,19 @@
+.payment-options {
+  @extend .fast-payment;
+  text-align: center;
+  background: $main-color;
+  padding: $l-size;
+  border-radius: 5px;
+  a {
+    text-decoration: none;
+    color: white;
+    padding-bottom: $l-size;
+    &:hover {
+      background: lighten($main-color, 15);
+      border-radius: 5px;
+    }
+  }
+  img {
+    width: 50%;
+  }
+}

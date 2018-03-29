@@ -1,0 +1,16 @@
+.loader {
+  background: #1d1d1d;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader--404 {
+  @extend .loader;
+  background: white;
+  img {
+    width: 50rem;
+  }
+}

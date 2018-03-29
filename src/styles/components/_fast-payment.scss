@@ -1,0 +1,53 @@
+.fast-payment {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: $xl-size;
+}
+
+.fast-payment__steps,
+.fast-payment__form {
+  padding: $m-size;
+  background: white;
+  border-radius: 5px;
+  width: 40rem;
+  // height: 35rem;
+  transition: -webkit-box-shadow 0.3s ease-in-out;
+  transition: -moz-box-shadow 0.3s ease-in-out;
+  transition: box-shadow 0.3s ease-in-out;
+  &:hover {
+    -webkit-box-shadow: 8px 7px 14px -7px rgba(0, 0, 0, 0.10);
+    -moz-box-shadow: 8px 7px 14px -7px rgba(0, 0, 0, 0.10);
+    box-shadow: 8px 7px 14px -7px rgba(0, 0, 0, 0.10);
+  }
+}
+
+.fast-payment__form {
+  // height: 40rem;
+}
+
+.fast-payment__steps {
+  width: 50rem;
+  p {
+    line-height: 3.5rem;
+  }
+  span {
+    background: $main-color;
+    color: white;
+    border-radius: 50%;
+    display: inline-block;
+    text-align: center;
+    line-height: 3rem;
+    width: 3rem;
+    margin-right: $s-size;
+  }
+}
+
+.fast-payment__title {
+  border-bottom: 1px solid gray;
+}
+
+.fast-payment__glyph {
+  color: $main-color;
+  font-size: 5rem;
+}

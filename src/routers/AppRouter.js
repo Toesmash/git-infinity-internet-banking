@@ -7,10 +7,12 @@ import RegisterPage from '../components/RegisterPage';
 import LoginPage from '../components/LoginPage';
 import DashboardPage from '../components/DashboardPage';
 import NotFoundPage from '../components/NotFoundPage';
+import PaymentsPage from '../components/PaymentsPage';
 
 // Routes
 import PublicRoute from './PublicRouter';
 import PrivateRoute from './PrivateRouter';
+import SepaPayment from '../components/SepaPayment';
 
 export const history = createHistory();
 
@@ -21,6 +23,8 @@ const AppRouter = () => (
         <PublicRoute path="/login" component={LoginPage} />
         <PublicRoute path="/register" component={RegisterPage} />
         <PrivateRoute path="/dashboard" component={DashboardPage} />
+        <PrivateRoute path="/payments" component={PaymentsPage} exact />
+        <PrivateRoute path="/payments/sepa" component={SepaPayment} exact />
         <Route component={NotFoundPage} />
       </Switch>
     </div>
