@@ -2,6 +2,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'normalize.css/normalize.css';
+import 'react-dates/lib/css/_datepicker.css';
+import 'react-dates/initialize';
 
 // FIREBASE
 import { firebase } from './firebase/firebase';

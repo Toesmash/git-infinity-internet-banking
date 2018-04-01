@@ -1,0 +1,19 @@
+.validate-QR {
+  display: block;
+  border-radius: 5px;
+  align-items: center;
+  text-align: center;
+  padding: $m-size;
+  width: 50%;
+  margin: 0 auto;
+  background: white;
+  margin-bottom: $xl-size;
+  transition: -webkit-box-shadow 0.3s ease-in-out;
+  transition: -moz-box-shadow 0.3s ease-in-out;
+  transition: box-shadow 0.3s ease-in-out;
+  &:hover {
+    -webkit-box-shadow: 8px 7px 14px -7px rgba(0, 0, 0, 0.10);
+    -moz-box-shadow: 8px 7px 14px -7px rgba(0, 0, 0, 0.10);
+    box-shadow: 8px 7px 14px -7px rgba(0, 0, 0, 0.10);
+  }
+}

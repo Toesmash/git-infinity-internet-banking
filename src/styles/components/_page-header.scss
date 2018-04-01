@@ -3,3 +3,10 @@
   padding: $l-size  0;
   font-weight: 300;
 }
+
+.page-header__tagline {
+  color: white;
+  background: $main-color;
+  padding: $m-size;
+  border-radius: 5px;
+}

@@ -14,7 +14,7 @@ class RegisterForm extends React.Component {
       secret: authenticator.generateKey(),
       loginID: moment().valueOf().toString(36).slice(2),
       memberSince: moment().valueOf(),
-      qrTimeLeft: 0
+      qrTimeLeft: '-'
     };
 
     this.props.setValues({
@@ -45,7 +45,8 @@ class RegisterForm extends React.Component {
   }
   generateQr = (lastName, loginID) => {
     const key = (this.state.secret).replace(/ /g, '').toUpperCase();
-    const accountName = `${lastName}:${loginID}@infinity.sk`;
+    const diacritics = lastName.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    const accountName = `${diacritics}:${loginID}@infinity.sk`;
     const issuer = 'InfinityBank';
     const algorithm = 'SHA1';
     const digits = 6;
@@ -163,20 +164,30 @@ const firebaseRequest = (values) => {
 
   firebase.auth()
     .createUserWithEmailAndPassword(`${loginID}@infinity.sk`, password);
-  database.ref('/users').child(loginID).set({
-    firstName,
-    lastName,
-    memberSince,
-    phone,
-    secret: secret.replace(/ /g, '').toUpperCase()
-  }).then(() => {
-    database.ref(`/users/${loginID}/accounts`).child(account).set({
-      balance: 0,
-      type: 'bežný účet',
-      name: 'hlavný účet',
-      ccy: 'EUR'
+  database.ref('users')
+    .child(loginID)
+    .set({
+      firstName,
+      lastName,
+      memberSince,
+      phone,
+      secret: secret.replace(/ /g, '').toUpperCase()
+    })
+    .then(() => {
+      database.ref(`users/${loginID}/accounts`)
+        .child(account)
+        .set({
+          balance: 0,
+          type: 'bežný účet',
+          name: 'hlavný účet',
+          ccy: 'EUR'
+        });
+    })
+    .then(() => {
+      database.ref('accounts')
+        .child(account)
+        .set(loginID);
     });
-  });
 };
 
 

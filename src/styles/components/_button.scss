@@ -5,7 +5,7 @@
   font-size: 2rem;
   font-weight: 300;
   border: none;
-  line-height: 1;
+  line-height: 1.5;
   display: inline-block;
   text-decoration: none;
 }
@@ -52,6 +52,30 @@
     -webkit-box-shadow: none;
     box-shadow: none;
   }
+}
+
+.button__cancel {
+  flex-grow: 2;
+  background: $error-color;
+  border-bottom: 3px solid darken($error-color, 30);
+  border-radius: 3px;
+  margin-left: $s-size;
+  &:active {
+    border-bottom: none;
+    margin-top: 3px;
+  }
+  &:focus {
+    background-image: none;
+    outline: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+}
+
+.button--qr {
+  flex-grow: 0;
+  margin-left: 0;
+  width: 40%;
 }
 
 .button__submit:disabled {

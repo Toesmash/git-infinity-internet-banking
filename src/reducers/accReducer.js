@@ -6,6 +6,16 @@ const accReducer = (state = accReducerDefaultState, action) => {
       return action.accounts;
     case 'LOGOUT':
       return accReducerDefaultState;
+    case 'UPDATE_BALANCE':
+      return state.map((account) => {
+        if (account.iban === action.iban) {
+          return {
+            ...account,
+            ...action
+          };
+        }
+        return account;
+      });
     default:
       return state;
   }

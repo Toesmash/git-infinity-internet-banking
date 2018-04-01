@@ -2,23 +2,23 @@ import React from 'react';
 import moment from 'moment';
 import Yup from 'yup';
 import IBAN from 'fast-iban';
+import numeral from 'numeral';
 import { connect } from 'react-redux';
 import { withFormik, Form, Field } from 'formik';
-
 import { startAddTransaction } from '../actions/txnActions';
 
 class FastPayment extends React.Component {
   setBalance = () => {
-    let accBalance;
+    let accBalance = 0;
     this.props.accounts.map((element) => {
       if (this.props.values.ibanFrom === element.iban) {
-        accBalance = element.balance;
+        accBalance = element.balance / 100;
       }
-      this.props.setValues({
-        ...this.props.values,
-        accBalance
-      });
-      return accBalance;
+      return null;
+    });
+    this.props.setValues({
+      ...this.props.values,
+      accBalance
     });
   }
 
@@ -26,10 +26,11 @@ class FastPayment extends React.Component {
     const {
       values, errors, touched, accounts, isSubmitting
     } = this.props;
+    let accBalance = 0;
 
-    const accBalance = accounts.map((element) => {
+    accounts.map((element) => {
       if (values.ibanFrom === element.iban) {
-        return element.balance / 100;
+        accBalance = element.balance / 100;
       }
       return null;
     });
@@ -53,14 +54,14 @@ class FastPayment extends React.Component {
               })
             }
           </Field>
-          {values.ibanFrom && <label className="text-input__balance">Tvoj zostatok na účte je <span>{accBalance} EUR</span></label>}
+          {values.ibanFrom && <label className="text-input__balance">Tvoj zostatok na účte je <span>{numeral(accBalance).format('0,0[.]00')} EUR</span></label>}
           {errors.ibanFrom && touched.ibanFrom && <div className="text-input--feedback">{errors.ibanFrom}</div>}
         </div>
         <div className="form-group">
           <label>Účet prijímateľa</label>
           <Field
             name="ibanTo"
-            placeholder="Vyplnte IBAN ucet prijimatela"
+            placeholder="Vyplňte IBAN účet prijímateľa"
             type="text"
             className={errors.ibanTo && touched.ibanTo ? 'iban-font text-input text-input--error' : 'iban-font text-input'}
           />
@@ -105,7 +106,7 @@ const FormikApp = withFormik({
     let correctAmount = values.amount.replace(/,/g, '.');
 
     correctAmount = parseFloat(correctAmount, 10);
-    if (correctAmount > values.accBalance / 100) {
+    if (correctAmount > values.accBalance) {
       if (correctAmount > 50) {
         setErrors({
           amount: ['Limit pre rýchle platby je 50 euro.', <br key="0" />, 'Suma je väčšia ako zostatok na účte']
@@ -117,20 +118,23 @@ const FormikApp = withFormik({
       }
     } else if (correctAmount > 50) {
       setErrors({
-        amount: 'Suma je väčšia ako zostatok na účte'
+        amount: 'Limit pre rýchle platby je 50 euro.'
       });
     } else {
       const payment = {
         type: 'sepa',
         flow: 'debit',
+        status: 'sent',
+        charges: 'SHA',
+        currency: 'EUR',
         ibanFrom: values.ibanFrom,
         ibanTo: values.ibanTo.replace(/ /g, ''),
-        bankTo: values.ibanTo.replace(/ /g, '').slice(4, 8),
         amount: correctAmount * 100,
         paymentDate: moment().valueOf()
       };
-      props.startAddTransaction(payment);
-      resetForm();
+      props.startAddTransaction(payment).then(() => {
+        resetForm();
+      });
     }
     setSubmitting(false);
   }

@@ -1,8 +1,26 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import numeral from 'numeral';
 import GlyphArrow from 'react-icons/lib/fa/angle-double-right';
 import GlyphSmile from 'react-icons/lib/fa/smile-o';
 import FastPayment from './FastPayment';
+
+numeral.register('locale', 'svk', {
+  delimiters: {
+    thousands: ' ',
+    decimal: ','
+  },
+  abbreviations: {
+    thousand: 'k',
+    million: 'm',
+    billion: 'b',
+    trillion: 't'
+  },
+  currency: {
+    symbol: '€'
+  }
+});
+numeral.locale('svk');
 
 const PaymentsPage = () => {
   return (

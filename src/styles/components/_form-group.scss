@@ -13,6 +13,7 @@
 }
 
 .text-input {
+  height: 4rem;
   padding: $xs-size;
   width: 100%;
   display: block;
@@ -25,10 +26,26 @@
   }
 }
 
+.text-input__currency {
+  text-align: center;
+  color: grey;
+  width: 30%;
+  margin-left: $m-size;
+}
+
+.text-input__charges {
+  text-align: center;
+  color: grey;
+  width: 60%;
+}
+
 .text-input__select {
   @extend .text-input;
-  height: 3rem;
   padding: $xs-size $m-size;
+}
+
+.text-input--symbols {
+  width: 32%;
 }
 
 .text-input--error {
@@ -43,6 +60,11 @@
 .text-input--feedback {
   color: $error-color;
   font-size: 1.3rem;
+}
+
+.text-input--validate {
+  color: $main-color;
+  font-size: 1.5rem;
 }
 
 .text-input__QR {
@@ -88,4 +110,8 @@
   span {
     font-weight: bold;
   }
+}
+.text-input--BIC {
+  width: 40%;
+  margin-left: $m-size;
 }

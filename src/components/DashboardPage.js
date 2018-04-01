@@ -33,19 +33,6 @@ const DashboardPage = ({ accounts = [], transactions = [] }) => (
   </div>
 );
 
-
-// {
-//   transactions.map((item) => {
-//     return (
-//       <p>{item.txnID}</p>
-//     );
-//   })
-// }
-// <DashboardAccOverview className='dashboard__item' />
-// <DashboardClockOverview className='dashboard__item' />
-// <DashboardTxnOverview className='dashboard__item' />
-// <DashboardFutureTxn className='dashboard__item' />
-
 const mapStateToProps = (reduxStore) => ({
   accounts: reduxStore.accounts,
   transactions: reduxStore.transactions

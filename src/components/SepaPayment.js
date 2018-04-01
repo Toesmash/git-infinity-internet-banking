@@ -1,24 +1,19 @@
 import React from 'react';
-// import SepaForm from './SepaForm';
-import { connect } from 'react-redux';
-// import { startAddTransaction } from '../actions/txnActions';
+import SepaForm from './SepaForm';
 
 const SepaPayment = (props) => {
-  // const onSubmit = (payment) => {
-  //   props.startAddTransaction(payment);
-  //   props.history.push('/dashboard');
-  // };
-
   return (
-    <div>
-      <h2>Nova SEPA platba</h2>
+    <div className="content-container">
+      <h2 className="page-header__title">Nová SEPA platba</h2>
+      <div className="page-header__tagline">
+        <p>
+          Jednotná oblasť platieb pre Európsku úniu.
+          Rovnaké poplatky. Rovnaký čas. Rovnaké tlačivá.
+        </p>
+      </div>
+      <SepaForm />
     </div>
   );
 };
 
-
-const mapDispatchToProps = (dispatch) => ({
-  // startAddTransaction: (payment) => dispatch(startAddTransaction(payment))
-});
-
-export default connect(undefined, mapDispatchToProps)(SepaPayment);
+export default SepaPayment;

@@ -3,3 +3,9 @@
   padding: 0 $s-size;
   max-width: 100rem;
 }
+
+.justify-content-space-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

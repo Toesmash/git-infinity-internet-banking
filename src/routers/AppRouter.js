@@ -13,6 +13,8 @@ import PaymentsPage from '../components/PaymentsPage';
 import PublicRoute from './PublicRouter';
 import PrivateRoute from './PrivateRouter';
 import SepaPayment from '../components/SepaPayment';
+import SwiftPayment from '../components/SwiftPayment';
+import AcctrPayment from '../components/AcctrPayment';
 
 export const history = createHistory();
 
@@ -25,6 +27,8 @@ const AppRouter = () => (
         <PrivateRoute path="/dashboard" component={DashboardPage} />
         <PrivateRoute path="/payments" component={PaymentsPage} exact />
         <PrivateRoute path="/payments/sepa" component={SepaPayment} exact />
+        <PrivateRoute path="/payments/intr" component={SwiftPayment} exact />
+        <PrivateRoute paath="/payments/acctr" component={AcctrPayment} />
         <Route component={NotFoundPage} />
       </Switch>
     </div>
