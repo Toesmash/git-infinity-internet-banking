@@ -6,6 +6,7 @@ import numeral from 'numeral';
 import { connect } from 'react-redux';
 import { withFormik, Form, Field } from 'formik';
 import { SingleDatePicker } from 'react-dates';
+import { history } from '../routers/AppRouter';
 
 import { startAddSwiftTransaction } from '../actions/txnActions';
 import ValidateQR from './ValidateQR';
@@ -15,7 +16,7 @@ class SwiftForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      paymentDate: moment(),
+      paymentDate: this.props.swift ? moment(this.props.swift.paymentDate) : moment(),
       calendarFocused: false,
       rates: {
         EUR: 1,
@@ -35,10 +36,13 @@ class SwiftForm extends React.Component {
   onFocusChange = ({ focused }) => {
     this.setState(() => ({ calendarFocused: focused }));
   };
-
   onDateChange = (date) => {
     if (date) {
-      this.setState(() => ({ paymentDate: date }));
+      if (date < moment().endOf('day')) {
+        this.setState(() => ({ paymentDate: moment() }));
+      } else {
+        this.setState(() => ({ paymentDate: date }));
+      }
     }
   }
 
@@ -63,10 +67,13 @@ class SwiftForm extends React.Component {
     this.props.submitForm();
   }
 
+  handleCancellation = () => {
+    this.props.onRemove(this.props.swift);
+  }
 
   render() {
     const {
-      errors, touched, isSubmitting, accounts, values, handleReset
+      errors, touched, isSubmitting, accounts, values, handleReset, dirty
     } = this.props;
     let accBalance = 0;
     accounts.map((element) => {
@@ -141,7 +148,7 @@ class SwiftForm extends React.Component {
                 <label
                   className="text-input__balance"
                 >
-                  {numeral(values.amount).format('0,0[.]00')} {values.currency} je presne <span>{numeral((values.amount.replace(/,/g, '.') * this.state.rates[values.currency])).format('0,0[.]00')} EUR</span>
+                  {numeral(values.amount).format('0,0[.]00')} {values.currency} je presne <span>{numeral((values.amount.toString().replace(/,/g, '.') * this.state.rates[values.currency])).format('0,0[.]00')} EUR</span>
                 </label>
               }
               {errors.amount && touched.amount && <div className="text-input--feedback">{errors.amount}</div>}
@@ -260,8 +267,16 @@ class SwiftForm extends React.Component {
               />
             </div>
             <div className="sepa-form-buttons">
-              <button onClick={handleReset} type="button" className="button button__reset" disabled={isSubmitting}>Vymaž formulár</button>
-              <button onClick={this.setDate} type="submit" className="button button__submit button__fastpayment" disabled={isSubmitting}>Skontroluj platbu</button>
+              {
+                this.props.swift ?
+                  <button onClick={this.handleCancellation} type="button" className="button button__cancel" disabled={isSubmitting}>Zruš platbu</button> :
+                  <button onClick={handleReset} type="button" className="button button__reset" disabled={isSubmitting}>Vymaž formulár</button>
+              }
+              {
+                this.props.swift ?
+                  <button onClick={this.setDate} type="submit" className="button button__submit button__fastpayment" disabled={isSubmitting || !dirty}>Uprav platbu</button> :
+                  <button onClick={this.setDate} type="submit" className="button button__submit button__fastpayment" disabled={isSubmitting}>Skontroluj platbu</button>
+              }
             </div>
           </div>
         </Form>
@@ -291,42 +306,73 @@ const schema = {
 
 
 const FormikApp = withFormik({
-  mapPropsToValues(props) {
+  mapPropsToValues({ swift }) {
     return {
-      ibanFrom: '',
-      creditorAcc: '',
-      creditorBIC: '',
-      creditorInfo: '',
-      creditorBankInfo: '',
-      amount: '',
-      note: '',
-      reference: '',
-      currency: 'EUR',
-      express: false,
-      charges: '',
+      ibanFrom: swift ? swift.ibanFrom : '',
+      creditorAcc: swift ? swift.creditorAcc : '',
+      creditorBIC: swift ? swift.creditorBIC : '',
+      creditorInfo: swift ? swift.creditorInfo : '',
+      creditorBankInfo: swift ? swift.creditorBankInfo : '',
+      amount: swift ? swift.originalAmount / 100 : '',
+      note: swift ? swift.note : '',
+      reference: swift ? swift.reference : '',
+      currency: swift ? swift.currency : 'EUR',
+      express: swift ? swift.express : false,
+      charges: swift ? swift.charges : '',
       requireQR: true
     };
   },
   validationSchema: Yup.object().shape(schema),
   handleSubmit(values, formikBag) {
-    console.log(values, formikBag);
     if (values.requireQR) {
       formikBag.setErrors({
         validate: 'Prosím overte platbu zadaním unikátneho QR kódu.'
       });
-    } else {
+    }
+    if (formikBag.props.swift && !values.requireQR) {
       const {
-        resetForm, setErrors, setSubmitting, props
+        setErrors, setSubmitting, props
+      } = formikBag;
+      let correctAmount = values.amount.toString().replace(/,/g, '.');
+      correctAmount = parseFloat(correctAmount, 10);
+      const originalAmount = correctAmount;
+      const amount = Math.round((values.amount.toString().replace(/,/g, '.') * values.exchangeRate) * 100) / 100;
+
+      if (amount > values.accBalance) {
+        setErrors({
+          amount: 'Suma je väčšia ako zostatok na účte'
+        });
+        setSubmitting(false);
+      } else {
+        const payment = {
+          type: 'swift',
+          flow: 'debit',
+          status: values.paymentDate > moment().endOf('day').valueOf() ? 'wait' : 'sent',
+          charges: values.charges,
+          ibanFrom: values.ibanFrom,
+          creditorAcc: values.creditorAcc,
+          creditorBIC: values.creditorBIC,
+          creditorInfo: values.creditorInfo,
+          creditorBankInfo: values.creditorBankInfo,
+          amount: amount * 100,
+          originalAmount: originalAmount * 100,
+          currency: values.currency,
+          paymentDate: values.paymentDate,
+          reference: values.reference,
+          note: values.note,
+          express: values.express
+        };
+        props.onEdit(payment);
+      }
+    }
+    if (!formikBag.props.swift && !values.requireQR) {
+      const {
+        setErrors, setSubmitting, props
       } = formikBag;
       let correctAmount = values.amount.replace(/,/g, '.');
       correctAmount = parseFloat(correctAmount, 10);
-      const originialAmount = correctAmount;
-      const amount = Math.round((values.amount * values.exchangeRate) * 100) / 100;
-
-
-      console.log('AMOUNT: ', amount);
-      console.log('ORIGINAL AMOUNT: ', originialAmount);
-      console.log('CURRENCY: ', values.currency);
+      const originalAmount = correctAmount;
+      const amount = Math.round((values.amount.replace(/,/g, '.') * values.exchangeRate) * 100) / 100;
 
       if (amount > values.accBalance) {
         setErrors({
@@ -336,7 +382,7 @@ const FormikApp = withFormik({
         const payment = {
           type: 'swift',
           flow: 'debit',
-          status: 'sent',
+          status: values.paymentDate > moment().endOf('day').valueOf() ? 'wait' : 'sent',
           charges: values.charges,
           ibanFrom: values.ibanFrom,
           creditorAcc: values.creditorAcc,
@@ -344,7 +390,7 @@ const FormikApp = withFormik({
           creditorInfo: values.creditorInfo,
           creditorBankInfo: values.creditorBankInfo,
           amount: amount * 100,
-          originialAmount: originialAmount * 100,
+          originalAmount: originalAmount * 100,
           currency: values.currency,
           paymentDate: values.paymentDate,
           reference: values.reference,
@@ -352,7 +398,7 @@ const FormikApp = withFormik({
           express: values.express
         };
         props.startAddSwiftTransaction(payment).then(() => {
-          resetForm();
+          history.push(`/accounts/${payment.ibanFrom}/success`);
         });
       }
       setSubmitting(false);

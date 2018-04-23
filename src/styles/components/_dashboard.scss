@@ -1,0 +1,181 @@
+.dashboard {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.dashboard__widget {
+  border-radius: 5px;
+  background: white;
+  transition: -webkit-box-shadow 0.3s ease-in-out;
+  transition: -moz-box-shadow 0.3s ease-in-out;
+  transition: box-shadow 0.3s ease-in-out;
+  &:hover {
+    -webkit-box-shadow: 8px 7px 14px -7px rgba(0, 0, 0, 0.10);
+    -moz-box-shadow: 8px 7px 14px -7px rgba(0, 0, 0, 0.10);
+    box-shadow: 8px 7px 14px -7px rgba(0, 0, 0, 0.10);
+  }
+  margin-bottom: $l-size;
+}
+
+.dashboard__widget--left {
+  width: 60rem;
+  padding-bottom: $l-size;
+  @media (max-width: $mobile-breakpoint) {
+    width: 100%;
+  }
+}
+
+.dashboard__widget--right {
+  width: 35rem;
+  padding-bottom: $l-size;
+  @media (max-width: $mobile-breakpoint) {
+    display: none;
+  }
+}
+
+.dashboard__header {
+  display: flex;
+  justify-content: space-between;
+  margin: $s-size;
+  padding: $m-size;
+  color: $txt-color;
+  border-bottom: 2px solid $main-color;
+  h3 {
+    span {
+      font-weight: 400;
+    }
+  }
+  @media (max-width: $mobile-breakpoint) {
+    padding: 0;
+  }
+}
+
+.dashboard__entry {
+  text-decoration: none;
+  color: $txt-color;
+}
+
+.dashboard__entry__item {
+  display: flex;
+  justify-content: space-between;
+  padding: $s-size;
+  border-bottom: 1px solid lightgray;
+  transition: background .3s ease-in-out;
+  &:hover {
+    background: lighten(lightgreen, 15);
+  }
+}
+
+.entry__account {
+  h4 {
+    font-weight: 500;
+    margin: 0;
+  }
+  p {
+    font-size: 1.2rem;
+  }
+}
+
+.entry__balance {
+  width: 40%;
+  text-align: right;
+  h4 {
+    font-weight: 500;
+    margin: 0;
+    span {
+      font-weight: 400;
+      font-size: 1.2rem;
+    }
+  }
+}
+
+.entry__balance--additional {
+  margin: 0;
+  padding: 0;
+  float: right;
+  font-size: 1.2rem;
+}
+
+.clock {
+  text-align: center;
+}
+
+// .dashboard__item {
+//   flex: 1 auto;
+// }
+// .clock {
+//   text-align: center;
+// }
+// .dashboard-widget {
+//   border-radius: 3px;
+//   border: 1px solid lightgrey;
+//   border-bottom:  3px solid darken(lightgrey, 30);
+//   padding: $s-size;
+//   margin-bottom: $l-size;
+//   transition: border-color .5s ease;
+//   &:hover {
+//      border-color: $main-color;
+//   }
+// }
+// .dashboard-left {
+//   @extend .dashboard-widget;
+//   width: 60rem;
+//   margin-right: $m-size;
+// }
+// .dashboard-right {
+//   @extend .dashboard-widget;
+//   width: 35rem;
+//   margin-right: 0;
+// }
+// .dashboard-header {
+//   display: flex;
+//   justify-content: space-between;
+//   border-bottom: 2px solid $main-color;
+//   margin-bottom: $m-size;
+//   h3 {
+//      span {
+//         font-weight: 400;
+//      }
+//   }
+// }
+// .dashboard--accounts__entry {
+//   display: flex;
+//   justify-content: space-between;
+//   padding-bottom: $l-size;
+//   transition: background .3s ease;
+//   &:hover {
+//      background: lighten(lightgray, 8);
+//   }
+// }
+// .dashboard--future {
+//   display: flex;
+// }
+// .dashboard--accounts__item {
+//   :nth-child(1){
+//      text-decoration: none;
+//      color: $txt-color;
+//      &:active {
+//         color: lighten($txt-color, 50);
+//      }
+//   } 
+//   p {
+//      margin: 0;
+//   }
+//   h4 {
+//      font-weight: 500;
+//      margin: 0;
+//   }
+//   span {
+//      font-weight: 400;
+//      font-size: 1.2rem;
+//   }
+//   .iban {
+//      font-size: 1.2rem;
+//      color: lighten($txt-color, 30);
+//   }
+//   .iban__small {
+//      font-size: 1rem;
+//   }
+// }

@@ -13,8 +13,12 @@ import PaymentsPage from '../components/PaymentsPage';
 import PublicRoute from './PublicRouter';
 import PrivateRoute from './PrivateRouter';
 import SepaPayment from '../components/SepaPayment';
+import SepaPaymentEdit from '../components/SepaPaymentEdit';
 import SwiftPayment from '../components/SwiftPayment';
 import AcctrPayment from '../components/AcctrPayment';
+import AccountsPage from '../components/AccountsPage';
+import CardsPage from '../components/CardsPage';
+import SwiftPaymentEdit from '../components/SwiftPaymentEdit';
 
 export const history = createHistory();
 
@@ -22,13 +26,17 @@ const AppRouter = () => (
   <Router history={history}>
     <div>
       <Switch>
-        <PublicRoute path="/login" component={LoginPage} />
+        <PublicRoute path="/login" component={LoginPage} exact />
         <PublicRoute path="/register" component={RegisterPage} />
         <PrivateRoute path="/dashboard" component={DashboardPage} />
         <PrivateRoute path="/payments" component={PaymentsPage} exact />
         <PrivateRoute path="/payments/sepa" component={SepaPayment} exact />
-        <PrivateRoute path="/payments/intr" component={SwiftPayment} exact />
-        <PrivateRoute paath="/payments/acctr" component={AcctrPayment} />
+        <PrivateRoute path="/payments/sepa/:iban/:id" component={SepaPaymentEdit} />
+        <PrivateRoute path="/payments/swift" component={SwiftPayment} exact />
+        <PrivateRoute path="/payments/swift/:iban/:id" component={SwiftPaymentEdit} />
+        <PrivateRoute path="/payments/acctr" component={AcctrPayment} exact />
+        <PrivateRoute path="/accounts" component={AccountsPage} />
+        <PrivateRoute path="/cards" component={CardsPage} />
         <Route component={NotFoundPage} />
       </Switch>
     </div>
@@ -36,13 +44,3 @@ const AppRouter = () => (
 );
 
 export default AppRouter;
-
-// <PublicRoute path="/register" component={RegisterPage} exact={true} />
-// <PrivateRoute path="/dashboard" component={DashboardPage} />
-// <PrivateRoute path="/payments" component={PaymentsPage} exact={true} />
-// <PrivateRoute path="/payments/sepa" component={AddSepaPayment} exact={true} />
-// <PrivateRoute path="/payments/sepa/:iban/:id" component={EditSepaPayment} />
-// <PrivateRoute path="/payments/intr" component={PaymentsIntrPage} />
-// <PrivateRoute paath="/payments/acctr" component={PaymentsAcctrPage} />
-// <PrivateRoute path="/accounts" component={AccountsPage} />
-// <PrivateRoute path="/cards" component={CardsPage} />

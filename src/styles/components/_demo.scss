@@ -1,0 +1,25 @@
+.demo {
+  border: 3px transparent $main-color;
+  background: $warning-color;
+  border-radius: 5px;
+  position: absolute;
+  right: $s-size;
+  top: $s-size;
+  padding: $xs-size;
+  color: $txt-color;
+}
+
+.demo__data {
+  p {
+    margin: 0;
+  }
+}
+
+.demo__user {
+  font-size: 1.3rem;
+  color: $warning-color;
+  span {
+    font-weight: bold;
+    font-size: 1.6rem;
+  }
+}

@@ -41,6 +41,7 @@ class ValidateQR extends React.Component {
         <div className="form-group">
           <label className="form-group__qr-label">QR verifikácia ({this.state.qrTimeLeft})</label>
           <Field
+            autoFocus
             name="totp"
             placeholder="123 456"
             type="text"
@@ -50,7 +51,7 @@ class ValidateQR extends React.Component {
         </div>
         <div className="justify-content-space-between">
           <button onClick={this.setQR} type="submit" className="button button__submit button--qr" disabled={isSubmitting}>Pošli platbu</button>
-          <button onClick={this.props.onReset} type="button" className="button button__cancel button--qr" disabled={isSubmitting}>Zruš platbu</button>
+          <button onClick={this.props.onReset} type="button" className="button button__cancel button--qr" disabled={isSubmitting}>Zruš verifikáciu</button>
         </div>
       </Form>
     );

@@ -58,8 +58,7 @@
   flex-grow: 2;
   background: $error-color;
   border-bottom: 3px solid darken($error-color, 30);
-  border-radius: 3px;
-  margin-left: $s-size;
+  border-radius: 3px; // margin-left: $s-size;
   &:active {
     border-bottom: none;
     margin-top: 3px;
@@ -70,12 +69,22 @@
     -webkit-box-shadow: none;
     box-shadow: none;
   }
+  &:disabled {
+    background: desaturate($error-color, 40%); // border-bottom: 3px solid darken(desaturate($error-color, 40%), 10);
+    border-bottom: none;
+  }
+}
+
+.button__block {
+  @extend .button__cancel;
+  flex-grow: 0;
+  margin-top: $m-size;
 }
 
 .button--qr {
   flex-grow: 0;
   margin-left: 0;
-  width: 40%;
+  font-size: 1.5rem;
 }
 
 .button__submit:disabled {
@@ -106,4 +115,47 @@
 .button__fastpayment {
   float: left;
   margin-left: 0;
+}
+
+.button__filter {
+  background: $focused-input;
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 1;
+  border-bottom: 3px solid darken($focused-input, 10);
+  border-radius: 3px;
+  margin-right: $s-size;
+  &:active {
+    border-bottom: none;
+    margin-top: 3px;
+  }
+  &:focus {
+    background-image: none;
+    outline: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+}
+
+.button__filter--reset {
+  font-size: 1.4rem;
+  background: $warning-color;
+  border-bottom: 3px solid darken($warning-color, 10);
+}
+
+.button__edit {
+  font-size: 1.5rem;
+  background: $warning-color;
+  border-radius: 5px;
+  border-bottom: 3px solid darken($warning-color, 10);
+  &:active {
+    border-bottom: none;
+    margin-top: 3px;
+  }
+  &:focus {
+    background-image: none;
+    outline: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
 }

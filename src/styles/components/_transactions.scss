@@ -1,0 +1,255 @@
+.transactions__list {
+  margin-bottom: $l-size;
+}
+
+.transactions__list--hide {
+  display: none;
+}
+
+.transactions__list--show {
+  display: block;
+}
+
+.transactions__header {
+  display: flex;
+  justify-content: space-between;
+  background: $subheader-color;
+  color: white;
+  padding: $s-size;
+}
+
+.transactions__filter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: $header-color;
+  color: white;
+  padding: $s-size;
+}
+
+.transactions__future {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: $txt-color;
+  border-bottom: 2px solid $focused-input;
+  padding: $xs-size;
+  background: white;
+  border-radius: 5px;
+  p {
+    margin-left: $s-size;
+    span {
+      font-weight: bold;
+    }
+  }
+}
+
+.transactions__future--hide {
+  display: none;
+}
+
+.transactions__future--show {
+  display: block;
+  margin-bottom: $xl-size;
+}
+
+.transactions__entry {
+  display: flex;
+  align-items: center;
+  background: white;
+  border-bottom: 1px solid lightgray;
+  padding: $m-size $s-size; // border: 1px solid red;
+  &:hover {
+    background: lighten(lightgreen, 15);
+  }
+}
+
+.transaction__entry--selected {
+  .amount--credit,
+  .amount--debit,
+  .date__bottom,
+  .date_top {
+    color: white;
+  }
+  color: white;
+  background: $main-color;
+  &:hover {
+    background: $main-color;
+  }
+}
+
+.date {
+  width: 10%;
+}
+
+.date__top {
+  @media (max-width: $mobile-breakpoint) {
+    line-height: 2rem;
+    text-align: center;
+  }
+}
+
+.date__bottom {
+  font-size: 1.3rem;
+  color: lighten($txt-color, 30);
+  @media (max-width: $mobile-breakpoint) {
+    display: none;
+  }
+}
+
+.type {
+  width: 10%;
+  img {
+    width: 4rem;
+  }
+  @media (max-width: $mobile-breakpoint) {
+    display: none;
+  }
+}
+
+.note {
+  width: 50%;
+  @media (max-width: $mobile-breakpoint) {
+    margin-left: $m-size;
+  }
+}
+
+.note__bottom {
+  font-size: 1.3rem;
+  color: lighten($txt-color, 30);
+  @media (max-width: $mobile-breakpoint) {
+    display: none;
+  }
+}
+
+.amount {
+  text-align: right;
+  margin-right: $s-size;
+  width: 30%;
+  @media (max-width: $mobile-breakpoint) {
+    width: 35%;
+    margin-right: none;
+  }
+}
+
+.amount__bottom {
+  font-size: 1.3rem;
+  color: lighten($txt-color, 30);
+  @media (max-width: $mobile-breakpoint) {
+    display: none;
+  }
+}
+
+.amount--credit {
+  font-weight: 500;
+  color: darken($main-color, 10);
+}
+
+.amount--debit {
+  font-weight: 500;
+  color: $error-color;
+}
+
+.transactions__entry__detail--show {
+  display: block;
+  background: white;
+  margin: 0 $s-size $m-size $s-size;
+  visibility: visible;
+  -webkit-transition: opacity 0.5s linear;
+  -moz-transition: opacity 0.5s linear;
+  -ms-transition: opacity 0.5s linear;
+  -o-transition: opacity 0.5s linear;
+  transition: opacity 0.5s linear;
+}
+
+.transactions__entry__detail--hide {
+  opacity: 0;
+  height: 0;
+  visibility: hidden;
+  -webkit-transition: opacity 0.5s linear;
+  -moz-transition: opacity 0.5s linear;
+  -ms-transition: opacity 0.5s linear;
+  -o-transition: opacity 0.5s linear;
+  transition: opacity 0.5s linear;
+}
+
+.detail__table__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $m-size;
+  border-bottom: 2px solid $main-color;
+  @media (max-width: $mobile-breakpoint) {
+    padding: $m-size $xs-size;
+  }
+}
+
+.detail {
+  text-align: center;
+  h4 {
+    font-weight: 400;
+    margin: 0 $m-size;
+    span {
+      font-weight: bold;
+    }
+  }
+  @media (max-width: $mobile-breakpoint) {
+    text-align: left;
+    h4 {
+      margin: 0 $s-size;
+    }
+  }
+}
+
+.detail__table {
+  margin: 0 $xl-size;
+  div {
+    p {
+      font-size: 1.2rem;
+      margin: 0;
+      padding: $xs-size;
+    }
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid lightgrey;
+    padding: 0 $xl-size;
+    :first-child {
+      font-weight: bold;
+    }
+  }
+  :last-child {
+    border: none;
+  }
+  @media (max-width: $mobile-breakpoint) {
+    margin: 0;
+    div {
+      p {
+        float: left;
+        margin: 0;
+        font-size: 1.5rem;
+        padding-bottom: 0.2rem;
+      }
+      padding-bottom: $xs-size;
+      flex-direction: column;
+      border-bottom: 1px solid lightgrey;
+    }
+  }
+}
+
+.detail__status--success {
+  font-weight: bold;
+  color: $main-color;
+}
+
+.detail__status--wait {
+  color: $warning-color;
+}
+
+.detail__status--error {
+  font-weight: bold;
+  color: $error-color;
+}
+
+.detail__table__creditor {
+  display: flex;
+}

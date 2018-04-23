@@ -12,10 +12,25 @@
   justify-content: space-between;
   align-items: center;
   padding: $s-size $s-size;
+  @media (max-width: $mobile-breakpoint) {
+    padding: $xs-size;
+    height: 7rem;
+    h1 {
+      font-size: 2rem;
+      margin: 0;
+    }
+    p {
+      margin: 0;
+    }
+  }
 }
 
 .subheader__content {
   @extend .header__content;
+  @media (max-width: $mobile-breakpoint) {
+    height: 5rem;
+    justify-content: space-around;
+  }
 }
 
 .header__title {
@@ -28,10 +43,13 @@
 
 .header__user {
   @extend .header__content;
+  p {
+    margin: 0;
+  }
 }
 
 .subheader__rightmenu {
-  * {
+  a {
     margin-right: $m-size;
     color: white;
     text-decoration: none;
@@ -39,6 +57,11 @@
       padding-bottom: 5px;
       border-bottom: 2px solid lighten($main-color, 15);
     }
+  }
+  @media (max-width: $mobile-breakpoint) {
+    padding: $xs-size;
+    letter-spacing: initial;
+    font-weight: initial;
   }
 }
 
@@ -54,6 +77,12 @@
     background: none;
     color: $main-color;
     border: 3px solid $main-color;
+  }
+  @media (max-width: $mobile-breakpoint) {
+    padding: $xs-size $m-size;
+    letter-spacing: initial;
+    font-weight: initial;
+    font-weight: 400;
   }
 }
 

@@ -2,6 +2,9 @@
   margin: 0 auto;
   padding: 0 $s-size;
   max-width: 100rem;
+  @media (max-width: $mobile-breakpoint) {
+    padding: 0 $xs-size;
+  }
 }
 
 .justify-content-space-between {

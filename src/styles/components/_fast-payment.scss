@@ -3,6 +3,10 @@
   justify-content: space-around;
   align-items: center;
   margin-bottom: $xl-size;
+  @media (max-width: $mobile-breakpoint) {
+    flex-direction: column;
+    margin-bottom: $m-size;
+  }
 }
 
 .fast-payment__steps,
@@ -10,8 +14,7 @@
   padding: $m-size;
   background: white;
   border-radius: 5px;
-  width: 40rem;
-  // height: 35rem;
+  width: 40rem; // height: 35rem;
   transition: -webkit-box-shadow 0.3s ease-in-out;
   transition: -moz-box-shadow 0.3s ease-in-out;
   transition: box-shadow 0.3s ease-in-out;
@@ -41,13 +44,22 @@
     width: 3rem;
     margin-right: $s-size;
   }
+  @media (max-width: $mobile-breakpoint) {
+    display: none;
+  }
 }
 
 .fast-payment__title {
   border-bottom: 1px solid gray;
+  @media (max-width: $mobile-breakpoint) {
+    margin-bottom: $m-size;
+  }
 }
 
 .fast-payment__glyph {
   color: $main-color;
   font-size: 5rem;
+  @media (max-width: $mobile-breakpoint) {
+    display: none;
+  }
 }

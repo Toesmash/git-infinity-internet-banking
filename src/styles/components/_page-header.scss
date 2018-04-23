@@ -1,12 +1,20 @@
 .page-header__title {
   margin: 0;
-  padding: $l-size  0;
+  padding: $l-size 0;
   font-weight: 300;
+  @media (max-width: $mobile-breakpoint) {
+    text-align: center;
+    font-weight: 400;
+  }
 }
 
 .page-header__tagline {
   color: white;
-  background: $main-color;
+  background: $focused-input;
   padding: $m-size;
   border-radius: 5px;
+  @media (max-width: $mobile-breakpoint) {
+    padding: $xs-size $s-size;
+    line-height: 2.8rem;
+  }
 }

@@ -103,8 +103,9 @@ const FormikApp = withFormik({
   validationSchema: Yup.object().shape(schema),
   handleSubmit(values, formikBag) {
     let totpKey = '';
-    const { user, password, totpInput } = values;
+    const { password, totpInput } = values;
     const { setSubmitting, setErrors } = formikBag;
+    const user = values.user.toLowerCase();
 
     database.ref('/users').once('value').then((snapshot) => {
       if (!snapshot.hasChild(user)) {

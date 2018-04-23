@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 import database from '../firebase/firebase';
 import { startUpdateBalance } from './accActions';
 
@@ -108,7 +110,7 @@ export const startAddSwiftTransaction = (txnData) => {
       creditorInfo,
       creditorBankInfo,
       amount,
-      originialAmount,
+      originalAmount,
       currency,
       paymentDate,
       reference,
@@ -127,7 +129,7 @@ export const startAddSwiftTransaction = (txnData) => {
       creditorInfo,
       creditorBankInfo,
       amount,
-      originialAmount,
+      originalAmount,
       currency,
       paymentDate,
       reference,
@@ -191,6 +193,47 @@ export const settlePayment = (pmtID, payment) => {
           dispatch(startAddTransaction(txnData, debtorID));
         });
       }
+    });
+  };
+};
+
+
+// REMOVING TRANSACTION
+export const cancellTransaction = (id) => ({
+  type: 'CANCELL_TRANSACTION',
+  id
+});
+
+export const startCancellTransaction = (payment) => {
+  return (dispatch, getState) => {
+    const userID = getState().auth.loginID;
+    return database.ref(`users/${userID}/transactions/${payment.txnID}`).update({
+      status: 'cancelled',
+      error: 'Platba zrušená uživateľom',
+      paymentDate: moment().valueOf(),
+      cancelledAmount: payment.amount,
+      amount: 0
+    }).then(() => {
+      dispatch(startUpdateBalance(userID, payment.ibanFrom, payment.amount, 'credit'));
+      dispatch(cancellTransaction(payment.txnID));
+    });
+  };
+};
+
+// EDITING TRANSACTION
+export const editTransaction = (id, payment) => ({
+  type: 'EDIT_TRANSACTION',
+  id,
+  payment
+});
+
+export const startEditTransaction = (id, payment) => {
+  return (dispatch, getState) => {
+    const userID = getState().auth.loginID;
+    return database.ref(`users/${userID}/transactions/${id}`).remove().then(() => {
+      database.ref(`users/${userID}/transactions/${id}`).set({ ...payment }).then(() => {
+        dispatch(editTransaction(id, payment));
+      });
     });
   };
 };

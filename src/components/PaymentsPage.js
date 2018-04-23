@@ -28,19 +28,19 @@ const PaymentsPage = () => {
       <h1 className="page-header__title">Typy platieb</h1>
       <div className="payment-options">
         <Link to="/payments/sepa" >
-          <div>
+          <div className="payment__sepa">
             <h3>SEPA platba</h3>
             <img alt="sepa" src="images/sepa.png" />
           </div>
         </Link>
-        <Link to="/payments/intr" >
-          <div>
+        <Link to="/payments/swift">
+          <div className="payment__swift">
             <h3>Medzinárodná platba</h3>
             <img alt="swift" src="images/swift.png" />
           </div>
         </Link>
         <Link to="/payments/acctr" >
-          <div>
+          <div className="payment__acctr">
             <h3>Prevod medzi účtami</h3>
             <img alt="prevod" src="images/money-bag.png" />
           </div>
@@ -61,7 +61,7 @@ const PaymentsPage = () => {
           <FastPayment />
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 

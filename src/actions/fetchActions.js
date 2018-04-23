@@ -12,6 +12,11 @@ export const setUserInfo = ({
   loginID
 });
 
+export const setUserCards = (cards) => ({
+  type: 'SET_CARDS',
+  cards
+});
+
 export const setUserAccounts = (accounts) => ({
   type: 'SET_ACCOUNTS',
   accounts
@@ -25,6 +30,7 @@ export const setUserTransactions = (transactions) => ({
 export const fetchUserData = (userID) => {
   const transactions = [];
   const accounts = [];
+  const cards = [];
   let userData;
 
   return (dispatch) => {
@@ -52,6 +58,15 @@ export const fetchUserData = (userID) => {
       });
     });
 
+    const cardPromise = database.ref(`users/${userID}/cards`).once('value').then((snapshot) => {
+      snapshot.forEach((item) => {
+        cards.push({
+          cardID: item.key,
+          ...item.val()
+        });
+      });
+    });
+
     const txnPromise = database.ref(`users/${userID}/transactions/`).once('value').then((snapshot) => {
       snapshot.forEach((item) => {
         transactions.push({
@@ -62,10 +77,12 @@ export const fetchUserData = (userID) => {
     });
     fetchPromises.push(accPromise);
     fetchPromises.push(txnPromise);
+    fetchPromises.push(cardPromise);
 
     return Promise.all(fetchPromises).then(() => {
       dispatch(setUserAccounts(accounts));
       dispatch(setUserTransactions(transactions));
+      dispatch(setUserCards(cards));
     });
   };
 };

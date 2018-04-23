@@ -6,6 +6,7 @@ import moment from 'moment';
 import IBAN from 'fast-iban';
 import numeral from 'numeral';
 
+import { history } from '../routers/AppRouter';
 import { startAddTransaction } from '../actions/txnActions';
 
 const AcctrForm = (props) => {
@@ -138,7 +139,7 @@ const AcctrForm = (props) => {
           </div>
           <div className="sepa-form-buttons">
             <button onClick={handleReset} type="button" className="button button__reset" disabled={isSubmitting}>Vymaž formulár</button>
-            <button onClick={setData} type="submit" className="button button__submit button__fastpayment" disabled={isSubmitting}>Skontroluj platbu</button>
+            <button onClick={setData} type="submit" className="button button__submit button__fastpayment" disabled={isSubmitting}>Pošli platbu</button>
           </div>
         </div>
       </Form>
@@ -193,7 +194,7 @@ const FormikApp = withFormik({
         note: values.note
       };
       props.startAddTransaction(payment).then(() => {
-        resetForm();
+        history.push(`/accounts/${payment.ibanFrom}/success`);
       });
     }
     setSubmitting(false);

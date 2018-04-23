@@ -2,3 +2,4 @@ node_modules/
 public/dist/
 .env.development
 .eslintrc
+src/playground

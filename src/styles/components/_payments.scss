@@ -1,19 +1,90 @@
+// .payment-options {
+//   @extend .fast-payment;
+//   text-align: center;
+//   background: $main-color;
+//   padding: $l-size;
+//   border-radius: 5px;
+//   a {
+//     text-decoration: none;
+//     color: white;
+//     padding-bottom: $l-size;
+//     &:hover {
+//       background: lighten($main-color, 15);
+//       border-radius: 5px;
+//     }
+//   }
+//   img {
+//     width: 50%;
+//   }
+//   @media (max-width: $mobile-breakpoint) {
+//     padding: $s-size;
+//     font-size: 1.2rem;
+//     font-weight: 300;
+//     a {
+//       padding: 0;
+//     }
+//   }
+// }
 .payment-options {
-  @extend .fast-payment;
-  text-align: center;
-  background: $main-color;
-  padding: $l-size;
-  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: space-between;
+  padding: $m-size;
   a {
     text-decoration: none;
     color: white;
-    padding-bottom: $l-size;
-    &:hover {
-      background: lighten($main-color, 15);
-      border-radius: 5px;
-    }
+  }
+  @media (max-width: $mobile-breakpoint) {
+    flex-direction: column;
+    justify-content: space-between;
+  }
+}
+
+.payment__sepa,
+.payment__swift,
+.payment__acctr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 3px solid $main-color;
+  background: $main-color;
+  border-radius: 5px;
+  width: 25rem;
+  padding: $m-size 0;
+  h3 {
+    margin: 0;
   }
   img {
-    width: 50%;
+    width: 10rem;
+    margin-top: $s-size;
+  }
+  &:hover {
+    background: none;
+    border: 3px solid $focused-input;
+    color: $focused-input;
+  }
+  @media (max-width: $mobile-breakpoint) {
+    width: 100%;
+    flex-direction: row;
+    padding: $s-size;
+    margin-bottom: $m-size;
+    h3 {
+      margin-left: $l-size;
+      -webkit-box-ordinal-group: 2;
+      -moz-box-ordinal-group: 2;
+      -ms-flex-order: 2;
+      -webkit-order: 2;
+      order: 2;
+    }
+    img {
+      margin: 0;
+      -webkit-box-ordinal-group: 1;
+      -moz-box-ordinal-group: 1;
+      -ms-flex-order: 1;
+      -webkit-order: 1;
+      order: 1;
+      width: 5rem;
+    }
   }
 }

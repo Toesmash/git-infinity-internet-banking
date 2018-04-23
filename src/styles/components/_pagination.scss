@@ -1,0 +1,35 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+}
+
+.button__pagination {
+  border: none;
+  margin: 0 $xs-size;
+  width: $l-size;
+  height: $l-size;
+  font-size: 2rem;
+  border-radius: 5px;
+  &:hover {
+    background: lighten(limegreen, 40);
+  }
+}
+
+.button__pagination--active {
+  color: white;
+  font-weight: bold;
+  background: $main-color;
+  &:hover {
+    background: $main-color;
+  }
+}
+
+.button__pagination:active,
+.button__pagination:focus,
+.button__pagination.active {
+  background-image: none;
+  outline: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  outline: none !important;
+}

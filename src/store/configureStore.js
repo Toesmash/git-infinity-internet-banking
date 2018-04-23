@@ -3,6 +3,8 @@ import thunk from 'redux-thunk';
 import authReducer from '../reducers/authReducer';
 import accReducer from '../reducers/accReducer';
 import txnReducer from '../reducers/txnReducer';
+import cardsReducer from '../reducers/cardsReducer';
+import filterReducer from '../reducers/filterReducer';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -11,7 +13,9 @@ const configureStore = () => {
     combineReducers({
       auth: authReducer,
       accounts: accReducer,
-      transactions: txnReducer
+      transactions: txnReducer,
+      cards: cardsReducer,
+      filter: filterReducer
     }),
     composeEnhancers(applyMiddleware(thunk))
   );

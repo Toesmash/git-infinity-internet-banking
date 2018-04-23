@@ -1,0 +1,103 @@
+.card__detail {
+  color: $txt-color;
+  padding: $m-size;
+  border-radius: 5px;
+  background: white;
+}
+
+.card__detail--show {
+  display: block;
+  margin-bottom: $xl-size;
+}
+
+.card__detail--hide {
+  display: none;
+}
+
+.card__overview {
+  display: flex;
+  justify-content: space-between;
+  @media (max-width: $mobile-breakpoint) {
+    flex-direction: column;
+  }
+}
+
+.card__overview__logo {
+  width: 25%;
+  padding: $s-size;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  @media (max-width: $mobile-breakpoint) {
+    width: 50%;
+    margin: 0 auto;
+  }
+}
+
+.card__relative {
+  position: relative;
+  .card__detail__info--issuer {
+    width: 100%;
+  }
+  .card__detail__info--contactless {
+    height: 20%;
+    position: absolute;
+    top: $s-size;
+    left: $s-size;
+  }
+}
+
+.card__overview__info {
+  width: 50%;
+  padding: $s-size;
+  display: flex;
+  justify-content: space-between;
+  p {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+  .card__general {
+    font-weight: bold;
+  }
+  .card__specific {
+    text-align: right;
+  }
+  @media (max-width: $mobile-breakpoint) {
+    width: 100%;
+    p {
+      margin-bottom: $s-size;
+    }
+  }
+}
+
+.card__overview__limits {
+  width: 25%;
+  padding: $s-size;
+  display: flex;
+  flex-direction: column;
+  p {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+  h4 {
+    margin: 0;
+    text-align: center;
+  }
+  .limits__text {
+    display: flex;
+    justify-content: space-between;
+  }
+  .limit__general {
+    font-weight: bold;
+  }
+  .limit__specific {
+    text-align: right;
+  }
+  @media (max-width: $mobile-breakpoint) {
+    width: 100%;
+    p {
+      margin-bottom: $s-size;
+    }
+  }
+}

@@ -6,6 +6,7 @@ import numeral from 'numeral';
 import { connect } from 'react-redux';
 import { withFormik, Form, Field } from 'formik';
 import { startAddTransaction } from '../actions/txnActions';
+import { history } from '../routers/AppRouter';
 
 class FastPayment extends React.Component {
   setBalance = () => {
@@ -101,7 +102,7 @@ const FormikApp = withFormik({
   validationSchema: Yup.object().shape(schema),
   handleSubmit(values, formikBag) {
     const {
-      resetForm, setErrors, setSubmitting, props
+      setErrors, setSubmitting, props
     } = formikBag;
     let correctAmount = values.amount.replace(/,/g, '.');
 
@@ -133,7 +134,7 @@ const FormikApp = withFormik({
         paymentDate: moment().valueOf()
       };
       props.startAddTransaction(payment).then(() => {
-        resetForm();
+        history.push(`/accounts/${payment.ibanFrom}/success`);
       });
     }
     setSubmitting(false);

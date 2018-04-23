@@ -7,6 +7,7 @@ import { withFormik, Form, Field } from 'formik';
 import { SingleDatePicker } from 'react-dates';
 import numeral from 'numeral';
 
+import { history } from '../routers/AppRouter';
 import { startAddTransaction } from '../actions/txnActions';
 import ValidateQR from './ValidateQR';
 
@@ -15,7 +16,7 @@ class SepaForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      paymentDate: moment(),
+      paymentDate: this.props.sepa ? moment(this.props.sepa.paymentDate) : moment(),
       calendarFocused: false
     };
   }
@@ -27,7 +28,11 @@ class SepaForm extends React.Component {
 
   onDateChange = (date) => {
     if (date) {
-      this.setState(() => ({ paymentDate: date }));
+      if (date < moment().endOf('day')) {
+        this.setState(() => ({ paymentDate: moment() }));
+      } else {
+        this.setState(() => ({ paymentDate: date }));
+      }
     }
   }
 
@@ -51,9 +56,13 @@ class SepaForm extends React.Component {
     this.props.submitForm();
   }
 
+  handleCancellation = () => {
+    this.props.onRemove(this.props.sepa);
+  }
+
   render() {
     const {
-      errors, touched, isSubmitting, accounts, values, handleReset
+      errors, touched, isSubmitting, accounts, values, handleReset, dirty
     } = this.props;
     let accBalance = 0;
     accounts.map((element) => {
@@ -217,8 +226,16 @@ class SepaForm extends React.Component {
               />
             </div>
             <div className="sepa-form-buttons">
-              <button onClick={handleReset} type="button" className="button button__reset" disabled={isSubmitting}>Vymaž formulár</button>
-              <button onClick={this.setDate} type="submit" className="button button__submit button__fastpayment" disabled={isSubmitting}>Skontroluj platbu</button>
+              {
+                this.props.sepa ?
+                  <button onClick={this.handleCancellation} type="button" className="button button__cancel" disabled={isSubmitting}>Zruš platbu</button> :
+                  <button onClick={handleReset} type="button" className="button button__reset" disabled={isSubmitting}>Vymaž formulár</button>
+              }
+              {
+                this.props.sepa ?
+                  <button onClick={this.setDate} type="submit" className="button button__submit button__fastpayment" disabled={isSubmitting || !dirty}>Uprav platbu</button> :
+                  <button onClick={this.setDate} type="submit" className="button button__submit button__fastpayment" disabled={isSubmitting}>Skontroluj platbu</button>
+              }
             </div>
           </div>
         </Form>
@@ -244,19 +261,19 @@ const schema = {
 
 
 const FormikApp = withFormik({
-  mapPropsToValues(props) {
+  mapPropsToValues({ sepa }) {
     return {
-      ibanFrom: '',
-      ibanTo: '',
+      ibanFrom: sepa ? sepa.ibanFrom : '',
+      ibanTo: sepa ? sepa.ibanTo : '',
       charges: 'SHA',
       currency: 'EUR',
-      creditorName: '',
-      amount: '',
-      note: '',
-      varSymbol: '',
-      specSymbol: '',
-      constSymbol: '',
-      express: false,
+      creditorName: sepa ? sepa.creditorName : '',
+      amount: sepa ? sepa.amount / 100 : '',
+      note: sepa ? sepa.note : '',
+      varSymbol: sepa ? sepa.varSymbol : '',
+      specSymbol: sepa ? sepa.specSymbol : '',
+      constSymbol: sepa ? sepa.constSymbol : '',
+      express: sepa ? sepa.express : false,
       requireQR: true
     };
   },
@@ -266,9 +283,43 @@ const FormikApp = withFormik({
       formikBag.setErrors({
         validate: 'Prosím overte platbu zadaním unikátneho QR kódu.'
       });
-    } else {
+    }
+    if (formikBag.props.sepa && !values.requireQR) {
       const {
-        resetForm, setErrors, setSubmitting, props
+        setErrors, props, setSubmitting
+      } = formikBag;
+      let correctAmount = values.amount.toString().replace(/,/g, '.');
+      correctAmount = parseFloat(correctAmount, 10);
+
+      if (correctAmount > values.accBalance) {
+        setErrors({
+          amount: 'Suma je väčšia ako zostatok na účte'
+        });
+        setSubmitting(false);
+      } else {
+        const payment = {
+          type: 'sepa',
+          flow: 'debit',
+          status: values.paymentDate > moment().endOf('day').valueOf() ? 'wait' : 'sent',
+          charges: values.charges,
+          ibanFrom: values.ibanFrom,
+          ibanTo: values.ibanTo.replace(/ /g, ''),
+          creditorName: values.creditorName,
+          amount: correctAmount * 100,
+          currency: values.currency,
+          paymentDate: values.paymentDate,
+          constSymbol: values.constSymbol,
+          specSymbol: values.specSymbol,
+          varSymbol: values.varSymbol,
+          note: values.note,
+          express: values.express
+        };
+        props.onEdit(payment);
+      }
+    }
+    if (!formikBag.props.sepa && !values.requireQR) {
+      const {
+        setErrors, setSubmitting, props
       } = formikBag;
       let correctAmount = values.amount.replace(/,/g, '.');
       correctAmount = parseFloat(correctAmount, 10);
@@ -281,7 +332,7 @@ const FormikApp = withFormik({
         const payment = {
           type: 'sepa',
           flow: 'debit',
-          status: 'sent',
+          status: values.paymentDate > moment().endOf('day').valueOf() ? 'wait' : 'sent',
           charges: values.charges,
           ibanFrom: values.ibanFrom,
           ibanTo: values.ibanTo.replace(/ /g, ''),
@@ -296,7 +347,7 @@ const FormikApp = withFormik({
           express: values.express
         };
         props.startAddTransaction(payment).then(() => {
-          resetForm();
+          history.push(`/accounts/${payment.ibanFrom}/success`);
         });
       }
       setSubmitting(false);
