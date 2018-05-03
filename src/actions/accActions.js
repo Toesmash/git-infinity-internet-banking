@@ -7,7 +7,7 @@ export const updateBalance = (ibanFrom, newBalance) => ({
 });
 
 export const startUpdateBalance = (user, iban, value, flow) => {
-  console.log('UPDATEING BALANCE: ', user, iban, value, flow);
+   // console.log('UPDATEING BALANCE: ', user, iban, value, flow);
   return (dispatch) => {
     let newBalance;
     database.ref(`users/${user}/accounts/${iban}`).once('value').then((snapshot) => {

@@ -8,7 +8,7 @@ import getTodayTransactions from '../selectors/todayTxn';
 
 const DashboardTxnOverview = (props) => {
   const now = moment();
-  console.log(props.transactions);
+  // console.log(props.transactions);
   return (
     <div className="dashboard__widget dashboard__widget--left">
       <div className="dashboard__header">

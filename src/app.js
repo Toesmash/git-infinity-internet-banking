@@ -18,8 +18,6 @@ import App from './components/App';
 import LoadingPage from './components/LoadingPage';
 // STYLES
 import './styles/styles.scss';
-import generateData from './playground/generateData';
-
 moment.locale('sk');
 
 // KARTY 

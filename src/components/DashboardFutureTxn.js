@@ -8,7 +8,7 @@ import getFutureTransactions from '../selectors/futureTransactions';
 
 
 const DashboardFutureTxn = (props) => {
-  console.log(props.transactions);
+  // console.log(props.transactions);
 
   return (
     <div className="dashboard__widget dashboard__widget--right">

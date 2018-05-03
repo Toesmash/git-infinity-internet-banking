@@ -10,16 +10,16 @@ export const addTransaction = (txn) => ({
 });
 
 export const startAddTransaction = (txnData, userID = '') => {
-  console.log('****************************');
-  console.log('*****SUBMITTING PAYMENT*****');
-  console.log('****************************');
+  // console.log('****************************');
+  // console.log('*****SUBMITTING PAYMENT*****');
+  // console.log('****************************');
   return (dispatch, getState) => {
     let user = userID;
     if (!user) {
-      console.log('NO USER ID GIVEN');
+      // console.log('NO USER ID GIVEN');
       user = getState().auth.loginID;
     }
-    console.log('USER: ', user);
+    // console.log('USER: ', user);
 
     const promises = [];
     const {
@@ -59,8 +59,8 @@ export const startAddTransaction = (txnData, userID = '') => {
     };
     const bankTo = ibanTo.replace(/ /g, '').slice(4, 8);
 
-    console.log('ADDING TRANSACTION', flow);
-    console.log(payment);
+    // console.log('ADDING TRANSACTION', flow);
+    // console.log(payment);
 
     const pushTxn = database.ref(`users/${user}/transactions/`).push(payment).then((ref) => {
       if (flow === 'debit') {
@@ -91,12 +91,12 @@ export const startAddTransaction = (txnData, userID = '') => {
 };
 
 export const startAddSwiftTransaction = (txnData) => {
-  console.log('**********************************');
-  console.log('*****SUBMITTING SWIFT PAYMENT*****');
-  console.log('**********************************');
+  // console.log('**********************************');
+  // console.log('*****SUBMITTING SWIFT PAYMENT*****');
+  // console.log('**********************************');
   return (dispatch, getState) => {
     const user = getState().auth.loginID;
-    console.log('USER: ', user);
+    // console.log('USER: ', user);
 
     const promises = [];
     const {
@@ -137,8 +137,8 @@ export const startAddSwiftTransaction = (txnData) => {
       express
     };
 
-    console.log('ADDING TRANSACTION', flow);
-    console.log(payment);
+    // console.log('ADDING TRANSACTION', flow);
+    // console.log(payment);
 
     const pushTxn = database.ref(`users/${user}/transactions/`).push(payment).then((ref) => {
       dispatch(addTransaction({
@@ -160,19 +160,19 @@ export const settlePayment = (pmtID, payment) => {
     database.ref(`accounts/${payment.ibanTo}`).once('value').then((snapshot) => {
       const creditorID = snapshot.val();
       if (creditorID) {
-        console.log('CREDITOR EXISTS', creditorID);
+        // console.log('CREDITOR EXISTS', creditorID);
         const creditPayment = payment;
         creditPayment.flow = 'credit';
         creditPayment.status = 'received';
         dispatch(startAddTransaction(creditPayment, creditorID));
       } else {
-        console.log('CREDITOR DOES NOT EXIST', creditorID);
+        // console.log('CREDITOR DOES NOT EXIST', creditorID);
         const debtorID = getState().auth.loginID;
         database.ref(`users/${debtorID}/transactions/${pmtID}`).update({
           status: 'error',
           error: 'Číslo účtu sa nenašlo'
         }).then(() => {
-          console.log('ERRORED PAYMENT: ', payment);
+          // console.log('ERRORED PAYMENT: ', payment);
           const txnData = {
             type: payment.type,
             flow: 'credit',
@@ -189,7 +189,7 @@ export const settlePayment = (pmtID, payment) => {
             constSymbol: '',
             express: true
           };
-          console.log('CORRECTED PAYMENT: ', txnData);
+          // console.log('CORRECTED PAYMENT: ', txnData);
           dispatch(startAddTransaction(txnData, debtorID));
         });
       }
